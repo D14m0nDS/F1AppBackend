@@ -4,39 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08b77101-b4fa-4430-a897-6ae0dcaeaa40" name="Changes" comment="Fixing branch errors">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/auth_controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/f1_controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/live_controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/extensions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/user_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/repositories/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/repositories/user_repository.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/repositories/user_repository_impl.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/services/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/services/auth_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/services/f1_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/services/live_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/tests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/utils/caching.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
+    <list default="true" id="08b77101-b4fa-4430-a897-6ae0dcaeaa40" name="Changes" comment="started work on the api and the user authentication">
+      <change afterPath="$PROJECT_DIR$/app/models/constructor_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/driver_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/repositories/driver_repository.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/repositories/driver_repository_impl.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/f1_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/f1_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/live_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/live_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/live_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/live_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +116,7 @@
       <workItem from="1731424565240" duration="701000" />
       <workItem from="1732284466863" duration="4906000" />
       <workItem from="1732540106514" duration="86000" />
-      <workItem from="1733310670279" duration="1073000" />
+      <workItem from="1733310670279" duration="4033000" />
     </task>
     <task id="LOCAL-00001" summary="Testing the api">
       <option name="closed" value="true" />
@@ -158,7 +134,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730768775008</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="started work on the api and the user authentication">
+      <option name="closed" value="true" />
+      <created>1733314142301</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1733314142301</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,7 +165,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Testing the api" />
     <MESSAGE value="Fixing branch errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing branch errors" />
+    <MESSAGE value="started work on the api and the user authentication" />
+    <option name="LAST_COMMIT_MESSAGE" value="started work on the api and the user authentication" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/F1AppBackend$test.coverage" NAME="test Coverage Results" MODIFIED="1729776434908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

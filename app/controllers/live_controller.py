@@ -5,16 +5,19 @@ from app.services.live_service import LiveService
 
 live_bp = Blueprint('live', __name__, url_prefix='/live')
 
+
 @live_bp.route('/')
 def index():
     return 'Live data broadcasting endpoint'
 
-# Start live updates when the application starts
+
 LiveService.start_live_updates()
+
 
 @socketio.on('connect', namespace='/live')
 def handle_connect():
     emit('message', {'data': 'Connected to live updates'})
+
 
 @socketio.on('disconnect', namespace='/live')
 def handle_disconnect():
