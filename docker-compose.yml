@@ -15,9 +15,9 @@ services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_USER: your_username
-      POSTGRES_PASSWORD: your_password
-      POSTGRES_DB: your_database_name
+      POSTGRES_USER: antoan
+      POSTGRES_PASSWORD: 1404
+      POSTGRES_DB: f1app
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

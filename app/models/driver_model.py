@@ -1,11 +1,18 @@
-from app.extensions import db
+class Driver:
 
+    def __init__(self, id, name, age, number, constructor, points):
+        self.id = id
+        self.name = name
+        self.age = age
+        self.number = number
+        self.constructor = constructor
+        self.points = points
 
-class Driver(db.Model):
-    __tablename__ = 'drivers'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-    age = db.Column(db.Integer, nullable=False)
-
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "age": self.age,
+        }
     def __repr__(self):
         return f'<Driver {self.name}>'

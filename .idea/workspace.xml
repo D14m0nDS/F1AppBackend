@@ -5,14 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="08b77101-b4fa-4430-a897-6ae0dcaeaa40" name="Changes" comment="started work on the api and the user authentication">
-      <change afterPath="$PROJECT_DIR$/app/models/constructor_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/driver_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/repositories/driver_repository.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/repositories/driver_repository_impl.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/test_controller.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/race_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/result_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/session_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/F1AppBackend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/F1AppBackend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/f1_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/f1_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/live_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/live_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/live_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/live_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/constructor_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/constructor_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/driver_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/driver_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +52,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;D14m0nDS&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/D14m0nDS/F1AppBackend.git&quot;,
+    &quot;accountId&quot;: &quot;f3655b7b-9eb7-494e-aa6a-ef54978456d1&quot;
+  }
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -89,7 +106,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-d68999036c7f-b11f5e8da5ad-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.14475.56" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23726.102" />
+        <option value="bundled-python-sdk-5e1850174b45-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23726.102" />
       </set>
     </attachedChunks>
   </component>
@@ -117,6 +135,9 @@
       <workItem from="1732284466863" duration="4906000" />
       <workItem from="1732540106514" duration="86000" />
       <workItem from="1733310670279" duration="4033000" />
+      <workItem from="1733356322014" duration="3818000" />
+      <workItem from="1733434274829" duration="7000" />
+      <workItem from="1736604898501" duration="13074000" />
     </task>
     <task id="LOCAL-00001" summary="Testing the api">
       <option name="closed" value="true" />
