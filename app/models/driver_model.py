@@ -1,7 +1,7 @@
 class Driver:
 
-    def __init__(self, id, name, age, number, constructor, points):
-        self.id = id
+    def __init__(self, driver_id, name, age, number, constructor, points):
+        self.id = driver_id
         self.name = name
         self.age = age
         self.number = number
@@ -13,6 +13,10 @@ class Driver:
             "id": self.id,
             "name": self.name,
             "age": self.age,
+            "number": self.number,
+            "constructor": self.constructor.to_dict(),
+            "points": self.points
         }
+
     def __repr__(self):
         return f'<Driver {self.name}>'

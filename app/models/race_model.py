@@ -1,5 +1,6 @@
 class Race:
-    def __init__(self, id, season, round, name, circuit_name, date, city, country, laps, distance):
+
+    def __init__(self, id, season, round, name, circuit_name, date, city, country, laps, distance, results):
         self.id = id
         self.season = season
         self.round = round
@@ -11,7 +12,7 @@ class Race:
         self.laps = laps
         self.distance = distance
         self.total_distance = laps * distance
-        self.results = []
+        self.results = results
 
     def to_dict(self):
         return {
