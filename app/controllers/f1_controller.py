@@ -1,8 +1,9 @@
-from copyreg import constructor
-
 from flask import Blueprint, jsonify, request
 
+from app.error_handlers.f1_error_handlers import register_error_handlers
 from app.repositories.driver_repository_impl import DriverRepositoryImpl
+from app.repositories.constructor_repository_impl import ConstructorRepositoryImpl
+from app.repositories.race_repository_impl import RaceRepositoryImpl
 from app.services.f1_service import F1Service
 
 f1_bp = Blueprint('f1', __name__, url_prefix='/f1')
@@ -10,7 +11,8 @@ f1_bp = Blueprint('f1', __name__, url_prefix='/f1')
 driver_repository = DriverRepositoryImpl()
 constructor_repository = ConstructorRepositoryImpl()
 race_repository = RaceRepositoryImpl()
-f1_service = F1Service()
+
+f1_service = F1Service(driver_repository, constructor_repository, race_repository)
 
 @f1_bp.route('/standings/drivers', methods=['GET'])
 def get_driver_standings():
@@ -36,8 +38,13 @@ def get_race():
     if not year or not round:
         return jsonify({"error": "Missing required parameters 'year' and 'round'"}), 400
 
-    race = f1_service.get_race(year, round)
-    return jsonify(race)
+    try:
+        race = f1_service.get_race(year, round)
+        return jsonify(race), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": "An unexpected error occurred."}), 500
 
 
 @f1_bp.route('/driver', methods=['GET'])
@@ -69,3 +76,5 @@ def get_all_drivers():
 def get_all_constructors():
     constructors = f1_service.get_all_constructors()
     return jsonify(constructors)
+
+register_error_handlers(f1_bp)

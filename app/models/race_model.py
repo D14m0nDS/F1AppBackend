@@ -1,7 +1,7 @@
 class Race:
 
-    def __init__(self, id, season, round, name, circuit_name, date, city, country, laps, distance, results):
-        self.id = id
+    def __init__(self, race_id, season, round, name, circuit_name, date, city, country, laps, distance, results):
+        self.id = race_id
         self.season = season
         self.round = round
         self.name = name

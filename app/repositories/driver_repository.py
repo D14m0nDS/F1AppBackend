@@ -10,4 +10,7 @@ class DriverRepositoryInterface(ABC):
     def get_all_drivers(self):
         pass
 
+    @abstractmethod
+    def get_driver_standings(self):
+        pass
 
