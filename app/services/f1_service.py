@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from app.repositories.driver_repository import DriverRepositoryInterface as DriverRepository
 from app.repositories.constructor_repository import ConstructorRepositoryInterface as ConstructorRepository
 from app.repositories.race_repository import RaceRepositoryInterface as RaceRepository
@@ -29,17 +28,13 @@ class F1Service:
         return self.race_repository.find_by_year_and_round(year, round)
 
     def get_driver(self, driver_id):
-        driver = self.driver_repository.find_by_id(driver_id)
-        return driver
+        return self.driver_repository.find_by_id(driver_id)
 
     def get_constructor(self, constructor_id):
-        constructor = self.constructor_repository.find_by_id(constructor_id)
-        return constructor
+        return self.constructor_repository.find_by_id(constructor_id)
 
     def get_all_drivers(self):
-        drivers = self.driver_repository.get_all_drivers()
-        return drivers
+        return self.driver_repository.get_all_drivers()
 
     def get_all_constructors(self):
-        constructors = self.constructor_repository.get_all_constructors()
-        return constructors
+        return self.constructor_repository.get_all_constructors()

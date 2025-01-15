@@ -1,7 +1,5 @@
-version: '3.8'
-
 services:
-  web:
+  api:
     build: .
     volumes:
       - .:/app
@@ -15,11 +13,12 @@ services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_USER: antoan
-      POSTGRES_PASSWORD: 1404
-      POSTGRES_DB: f1app
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
 
 volumes:
   postgres_data:
