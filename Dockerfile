@@ -1,10 +1,12 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 ENV PYTHONUNBUFFERED=1 \
     FLASK_APP=run.py \
     FLASK_ENV=production
 
 WORKDIR /app
+
+RUN mkdir -p /app/FastF1Cache
 
 COPY requirements.txt .
 

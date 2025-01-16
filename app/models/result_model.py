@@ -1,19 +1,19 @@
+from app.models.driver_model import Driver
+from app.models.constructor_model import Constructor
+
 class Result:
-    def __init__(self, position, driver, constructor, time, points):
+    def __init__(self, position: int, driver: Driver, constructor: Constructor, time: str, points: float):
         self.position = position
         self.driver = driver
         self.constructor = constructor
         self.time = time
         self.points = points
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {
             "position": self.position,
             "driver": self.driver.to_dict(),
             "constructor": self.constructor.to_dict(),
             "time": self.time,
-            "points": self.points,
+            "points": self.points
         }
-
-    def __repr__(self):
-        return f'<Result {self.position}: {self.driver.name} ({self.points} points)>'

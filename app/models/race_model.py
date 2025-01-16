@@ -1,6 +1,21 @@
-class Race:
+from app.models.result_model import Result
+from typing import List
 
-    def __init__(self, race_id, season, round, name, circuit_name, date, city, country, laps, distance, results):
+class Race:
+    def __init__(
+        self,
+        race_id: int,
+        season: int,
+        round: int,
+        name: str,
+        circuit_name: str,
+        date: str,
+        city: str,
+        country: str,
+        laps: int,
+        distance: float,
+        results: List[Result]
+    ):
         self.id = race_id
         self.season = season
         self.round = round
@@ -14,14 +29,14 @@ class Race:
         self.total_distance = laps * distance
         self.results = results
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {
             "id": self.id,
             "season": self.season,
             "round": self.round,
             "name": self.name,
-            "date": self.date,
             "circuit_name": self.circuit_name,
+            "date": self.date,
             "city": self.city,
             "country": self.country,
             "laps": self.laps,
@@ -29,5 +44,3 @@ class Race:
             "total_distance": self.total_distance,
             "results": [result.to_dict() for result in self.results]
         }
-    def __repr__(self):
-        return f'<Race {self.name} ({self.date})>'

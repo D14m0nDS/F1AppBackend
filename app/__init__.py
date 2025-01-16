@@ -2,7 +2,8 @@ from flask import Flask
 from app.config import Config
 from app.extensions import db, migrate, jwt, socketio
 from app.controllers import register_blueprints
-from app.utils.caching import cache
+from app.utils.caching import set_up_caching
+
 
 
 def create_app(config_class=Config):
@@ -13,8 +14,8 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     jwt.init_app(app)
     socketio.init_app(app, cors_allowed_origins="*")
-    cache.init_app(app)
 
+    set_up_caching(app)
     register_blueprints(app)
 
     return app

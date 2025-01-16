@@ -6,8 +6,10 @@ class RaceRepositoryImpl(RaceRepositoryInterface):
     def __init__(self):
         self.ergast = Ergast()
 
-    def find_by_year_and_round(self, year, round):
-        pass
+    def find_by_season_and_round(self, season, round):
+        race = self.ergast.get_race_results(season=season, round=round)
+        print(race)
+        return race
 
     def get_schedule(self):
         pass

@@ -1,6 +1,9 @@
+from app.models.constructor_model import Constructor
+
+
 class Driver:
 
-    def __init__(self, driver_id, name, age, number, constructor, points):
+    def __init__(self, driver_id: int, name: str, age: int, number: int, constructor: Constructor, points: float):
         self.id = driver_id
         self.name = name
         self.age = age
@@ -8,7 +11,7 @@ class Driver:
         self.constructor = constructor
         self.points = points
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {
             "id": self.id,
             "name": self.name,
@@ -17,6 +20,3 @@ class Driver:
             "constructor": self.constructor.to_dict(),
             "points": self.points
         }
-
-    def __repr__(self):
-        return f'<Driver {self.name}>'

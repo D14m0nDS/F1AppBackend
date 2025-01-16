@@ -1,13 +1,35 @@
 from flask import jsonify
-
-def handle_value_error(error):
-    return jsonify({"error": str(error)}), 400
-
-def handle_unexpected_error(error):
-    return jsonify({"error": "An unexpected error occurred."}), 500
+from werkzeug.exceptions import BadRequest, Unauthorized, Forbidden, NotFound, MethodNotAllowed, InternalServerError
 
 
+def handle_bad_request(_error):
+    return jsonify({"error": "Bad request"}), 400
 
-def register_error_handlers(blueprint):
-    blueprint.register_error_handler(ValueError, handle_value_error)
-    blueprint.register_error_handler(Exception, handle_unexpected_error)
+
+def handle_unauthorized(_error):
+    return jsonify({"error": "Unauthorized"}), 401
+
+
+def handle_forbidden(_error):
+    return jsonify({"error": "Forbidden"}), 403
+
+
+def handle_not_found(_error):
+    return jsonify({"error": "Resource not found"}), 404
+
+
+def handle_method_not_allowed(_error):
+    return jsonify({"error": "Method not allowed"}), 405
+
+
+def handle_internal_server_error(_error):
+    return jsonify({"error": "Internal server error"}), 500
+
+
+def register_error_handlers(app):
+    app.register_error_handler(BadRequest, handle_bad_request)
+    app.register_error_handler(Unauthorized, handle_unauthorized)
+    app.register_error_handler(Forbidden, handle_forbidden)
+    app.register_error_handler(NotFound, handle_not_found)
+    app.register_error_handler(MethodNotAllowed, handle_method_not_allowed)
+    app.register_error_handler(InternalServerError, handle_internal_server_error)
