@@ -20,6 +20,7 @@ class F1Service:
 
     def get_schedule(self):
         schedule = self.race_repository.get_schedule()
+
         return schedule
 
     def get_race(self, season, round):

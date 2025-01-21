@@ -18,14 +18,15 @@ f1_service = F1Service(driver_repository, constructor_repository, race_repositor
 @f1_bp.route('/standings/drivers', methods=['GET'])
 @cache.cached(timeout=3600)
 def get_driver_standings():
-    standings = f1_service.get_driver_standings()
+    standings = "1.Max"
+
     return jsonify(standings), 200
 
 
 @f1_bp.route('/standings/constructors', methods=['GET'])
 @cache.cached(timeout=3600)
 def get_constructor_standings():
-    standings = f1_service.get_constructor_standings()
+    standings = "McLaren"
     return jsonify(standings), 200
 
 @f1_bp.route('/schedule', methods=['GET'])

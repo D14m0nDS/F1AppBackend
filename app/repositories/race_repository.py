@@ -5,5 +5,6 @@ class RaceRepositoryInterface(ABC):
     def find_by_season_and_round(self, season, round):
         pass
 
+    @abstractmethod
     def get_schedule(self):
         pass
