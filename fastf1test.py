@@ -1,36 +1,23 @@
-import pandas as pd
-from flask import jsonify
+import socket
 
-pd.set_option('display.max_rows', 500)
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.width', 1000)
+def listen_for_broadcast(port=5000):
+    """Listen for UDP broadcast messages."""
+    try:
+        # Create a UDP socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        sock.bind(("", port))  # Bind to all network interfaces on the specified port
 
-from datetime import datetime
-import fastf1
-from fastf1 import get_event_schedule, get_session
-from app.models.driver_model import Driver
+        print(f"Listening for broadcasts on port {port}...")
+        while True:
+            data, addr = sock.recvfrom(1024)  # Buffer size is 1024 bytes
+            print(f"Received message: {data.decode()} from {addr}")
+    except KeyboardInterrupt:
+        print("\nStopped listening.")
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        sock.close()
 
-fastf1.Cache.enable_cache('FastF1Cache')
-
-def get_schedule():
-    current_year = datetime.now().year
-    schedule = get_event_schedule(year=current_year)
-
-    # Convert schedule DataFrame to a list of dictionaries
-    serialized_schedule = []
-    for _, row in schedule.iterrows():
-        event_dict = {
-            "EventName": row['EventName'],  # Use column names as keys
-            "EventDate": (
-                row['EventDate'].isoformat()
-                if pd.notna(row['EventDate'])
-                else "Unknown"
-            ),
-
-        }
-        serialized_schedule.append(event_dict)
-
-    return jsonify(serialized_schedule)
-
-# Test the function
-print(get_schedule())
+if __name__ == "__main__":
+    listen_for_broadcast()
