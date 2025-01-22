@@ -1,7 +1,8 @@
-import fastf1
 from fastf1 import get_event_schedule
 from fastf1.ergast import Ergast
 from datetime import datetime
+
+from app.models.race_model import Race
 from app.repositories.race_repository import RaceRepositoryInterface
 import pandas as pd
 
@@ -29,24 +30,28 @@ class RaceRepositoryImpl(RaceRepositoryInterface):
         return "Circuit name not found"
 
     def __serialize_schedule(self, schedule, season):
-
-        serialized_schedule = []
+        pd.set_option('display.max_rows', 500)
+        pd.set_option('display.max_columns', 500)
+        pd.set_option('display.width', 1000)
+        new_schedule = list()
         for _, row in schedule.iterrows():
-            event_dict = {
-                "EventName": row['EventName'],
-                "EventDate": (
-                    row['EventDate'].isoformat() if pd.notna(row['EventDate']) else "Unknown"
-                ),
-                "Country": row['Country'],
-                "Location": row['Location'],
-                "CircuitName": self.__find_circuit_by_location(season, row['Location']),
-                
-            }
-            serialized_schedule.append(event_dict)
-        return serialized_schedule
+            print(row)
+            new_schedule.append(Race(
+                race_id=row['OfficialEventName'],
+                season=season,
+                round=row['RoundNumber'],
+                date=row['EventDate'],
+                country=row['Country'],
+                city=row['Location'],
+                circuit_name=self.__find_circuit_by_location(season, row['Location']),
+                name=row['EventName'],
+                results=[]
+            ).to_dict())
+
+        return new_schedule
 
     def get_schedule(self):
         current_year = datetime.now().year
         schedule = get_event_schedule(year=current_year)
-        serialized_schedule = self.__serialize_schedule(schedule=schedule, season=current_year)
-        return serialized_schedule
+        new_schedule = self.__serialize_schedule(schedule=schedule, season=current_year)
+        return new_schedule

@@ -12,8 +12,6 @@ class Race:
         date: str,
         city: str,
         country: str,
-        laps: int,
-        distance: float,
         results: List[Result]
     ):
         self.id = race_id
@@ -24,9 +22,6 @@ class Race:
         self.date = date
         self.city = city
         self.country = country
-        self.laps = laps
-        self.distance = distance
-        self.total_distance = laps * distance
         self.results = results
 
     def to_dict(self) -> dict:
@@ -39,8 +34,5 @@ class Race:
             "date": self.date,
             "city": self.city,
             "country": self.country,
-            "laps": self.laps,
-            "distance": self.distance,
-            "total_distance": self.total_distance,
             "results": [result.to_dict() for result in self.results]
         }
