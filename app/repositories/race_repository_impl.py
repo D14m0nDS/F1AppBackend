@@ -1,19 +1,34 @@
-from fastf1 import get_event_schedule
+import pandas as pd
+from fastf1 import get_event_schedule, get_event
 from fastf1.ergast import Ergast
 from datetime import datetime
 
+from flask import session
+
 from app.models.race_model import Race
 from app.repositories.race_repository import RaceRepositoryInterface
-import pandas as pd
 
 class RaceRepositoryImpl(RaceRepositoryInterface):
     def __init__(self):
         self.ergast = Ergast()
 
     def find_by_season_and_round(self, season, round):
-        race = self.ergast.get_race_results(season=season, round=round)
-        print(race)
-        return race
+
+        pd.set_option('display.max_rows', 500)
+        pd.set_option('display.max_columns', 500)
+        pd.set_option('display.width', 1000)
+        pd.set_option('display.max_colwidth', 1000)
+
+        event = get_event(season, round)
+
+        session = event.get_session("R")
+        session.load()
+
+        session_results = session.results
+
+
+        print(session_results)
+        return "Qj mi kura"
 
     def __find_circuit_by_location(self, season, location):
 
@@ -30,12 +45,8 @@ class RaceRepositoryImpl(RaceRepositoryInterface):
         return "Circuit name not found"
 
     def __serialize_schedule(self, schedule, season):
-        pd.set_option('display.max_rows', 500)
-        pd.set_option('display.max_columns', 500)
-        pd.set_option('display.width', 1000)
         new_schedule = list()
         for _, row in schedule.iterrows():
-            print(row)
             new_schedule.append(Race(
                 race_id=row['OfficialEventName'],
                 season=season,
@@ -53,5 +64,10 @@ class RaceRepositoryImpl(RaceRepositoryInterface):
     def get_schedule(self):
         current_year = datetime.now().year
         schedule = get_event_schedule(year=current_year)
-        new_schedule = self.__serialize_schedule(schedule=schedule, season=current_year)
-        return new_schedule
+        races = self.__serialize_schedule(schedule, season=current_year)
+        return {
+            "Schedule": {
+                "season": current_year,
+                "Races": races
+            }
+        }

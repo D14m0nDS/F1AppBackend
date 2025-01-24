@@ -37,9 +37,9 @@ def get_schedule():
 
 @f1_bp.route('/race', methods=['GET'])
 def get_race():
+
     season = request.args.get('season', type=int)
     round = request.args.get('round', type=int)
-
     if not season or not round:
         return jsonify({"error": "Missing required parameters 'season' and 'round'"}), 400
 

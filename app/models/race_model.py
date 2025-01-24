@@ -26,13 +26,16 @@ class Race:
 
     def to_dict(self) -> dict:
         return {
-            "id": self.id,
             "season": self.season,
             "round": self.round,
             "name": self.name,
-            "circuit_name": self.circuit_name,
+            "Circuit": {
+                "circuitName": self.circuit_name,
+                "Location": {
+                    "locality": self.city,
+                    "country": self.country,
+                }
+            },
             "date": self.date,
-            "city": self.city,
-            "country": self.country,
             "results": [result.to_dict() for result in self.results]
         }
