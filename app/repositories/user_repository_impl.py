@@ -1,7 +1,6 @@
-from app.repositories.user_repository import UserRepositoryInterface
 from app.models.user_model import User
 from app.extensions import db
-
+from app.repositories.user_repository import UserRepositoryInterface
 
 class UserRepositoryImpl(UserRepositoryInterface):
     def find_by_id(self, user_id):

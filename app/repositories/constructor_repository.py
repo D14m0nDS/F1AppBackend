@@ -7,10 +7,10 @@ class ConstructorRepositoryInterface(ABC):
         pass
 
     @abstractmethod
-    def get_all_constructors(self):
+    def get_all_constructors(self, season: int):
         pass
 
     @abstractmethod
-    def get_constructor_standings(self):
+    def get_constructor_standings(self, season: int):
         pass
 

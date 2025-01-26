@@ -7,10 +7,10 @@ class DriverRepositoryInterface(ABC):
         pass
 
     @abstractmethod
-    def get_all_drivers(self):
+    def get_all_drivers(self, season: int):
         pass
 
     @abstractmethod
-    def get_driver_standings(self):
+    def get_driver_standings(self, season: int):
         pass
 

@@ -10,18 +10,18 @@ class F1Service:
         self.constructor_repository = constructor_repository
         self.race_repository = race_repository
 
-    def get_driver_standings(self):
-        driver_standings = self.driver_repository.get_driver_standings()
-        return driver_standings
+    def get_driver_standings(self, season: int) -> list[dict]:
+        if season < 1950 or season > datetime.now().year:
+            raise ValueError("Invalid season")
+        return self.driver_repository.get_driver_standings(season)
 
-    def get_constructor_standings(self):
-        constructor_standings = self.constructor_repository.get_constructor_standings()
-        return constructor_standings
+    def get_constructor_standings(self, season: int) -> list[dict]:
+        if season < 1950 or season > datetime.now().year:
+            raise ValueError("Invalid season")
+        return self.constructor_repository.get_constructor_standings(season)
 
     def get_schedule(self):
-        schedule = self.race_repository.get_schedule()
-
-        return schedule
+        return self.race_repository.get_schedule()
 
     def get_race(self, season, round):
         current_year = datetime.now().year
@@ -35,8 +35,14 @@ class F1Service:
     def get_constructor(self, constructor_id):
         return self.constructor_repository.find_by_id(constructor_id)
 
-    def get_all_drivers(self):
-        return self.driver_repository.get_all_drivers()
+    def get_all_drivers(self, season: int):
+        current_year = datetime.now().year
+        if season < 1950 or season > current_year:
+            raise BadRequest(f"Invalid season '{season}'. Season must be between 1950 and {current_year}.")
+        return self.driver_repository.get_all_drivers(season)
 
-    def get_all_constructors(self):
-        return self.constructor_repository.get_all_constructors()
+    def get_all_constructors(self, season: int):
+        current_year = datetime.now().year
+        if season < 1950 or season > current_year:
+            raise BadRequest(f"Invalid season '{season}'. Season must be between 1950 and {current_year}.")
+        return self.constructor_repository.get_all_constructors(season)

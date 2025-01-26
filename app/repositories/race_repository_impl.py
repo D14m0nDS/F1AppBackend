@@ -3,9 +3,8 @@ from fastf1 import get_event_schedule, get_event
 from fastf1.ergast import Ergast
 from datetime import datetime
 
-from flask import session
-
 from app.models.race_model import Race
+from app.models.result_model import Result
 from app.repositories.race_repository import RaceRepositoryInterface
 
 class RaceRepositoryImpl(RaceRepositoryInterface):
@@ -14,21 +13,37 @@ class RaceRepositoryImpl(RaceRepositoryInterface):
 
     def find_by_season_and_round(self, season, round):
 
-        pd.set_option('display.max_rows', 500)
-        pd.set_option('display.max_columns', 500)
-        pd.set_option('display.width', 1000)
-        pd.set_option('display.max_colwidth', 1000)
-
         event = get_event(season, round)
 
         session = event.get_session("R")
         session.load()
 
         session_results = session.results
+        race = Race(
+            race_id=event['OfficialEventName'],
+            season=season,
+            round=round,
+            name=event['EventName'],
+            circuit_name=self.__find_circuit_by_location(season, event['Location']),
+            date=event['EventDate'],
+            city=event['Location'],
+            country=event['Country'],
+            results=[]
+            )
+        for _, result in session_results.iterrows():
+            race.results.append(Result(
+                race_id=event['OfficialEventName'],
+                driver_id=result['DriverId'],
+                driver_name=result['FullName'],
+                constructor_id=result['TeamId'],
+                constructor_name=result['TeamName'],
+                position=float(result['Position']),
+                points=float(result['Points']),
+                time=str(result['Time']) if not pd.isna(result['Time']) else None,
+                status=result['Status']
+            ))
 
-
-        print(session_results)
-        return "Qj mi kura"
+        return race.to_dict()
 
     def __find_circuit_by_location(self, season, location):
 

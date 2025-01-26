@@ -9,3 +9,10 @@ fastf1
 pandas
 werkzeug
 flask-cors
+flask-oauthlib
+email-validator
+flask-limiter
+email_validator
+MarkupSafe
+alembic
+SQLAlchemy
