@@ -3,16 +3,16 @@ from typing import List
 
 class Race:
     def __init__(
-        self,
-        race_id: int,
-        season: int,
-        round: int,
-        name: str,
-        circuit_name: str,
-        date: str,
-        city: str,
-        country: str,
-        results: List[Result]
+            self,
+            race_id: str,
+            season: int,
+            round: int,
+            name: str,
+            circuit_name: str,
+            date: str,
+            city: str,
+            country: str,
+            results: List[Result]
     ):
         self.id = race_id
         self.season = season

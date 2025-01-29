@@ -1,5 +1,16 @@
 class Result:
-    def __init__(self, race_id: str, position: float, driver_id: str, driver_name: str, constructor_id: str, constructor_name: str, time: str, points: float, status: str):
+    def __init__(
+            self,
+            race_id: str,
+            position: float,
+            driver_id: str,
+            driver_name: str,
+            constructor_id: str,
+            constructor_name: str,
+            time: str,
+            points: float,
+            status: str,
+    ):
         self.race_id = race_id
         self.position = position
         self.driver_id = driver_id
@@ -19,6 +30,6 @@ class Result:
             "constructor_id": self.constructor_id,
             "constructor_name": self.constructor_name,
             "time": self.time,
-            "points": self.points
-
+            "points": self.points,
+            "status": self.status
         }

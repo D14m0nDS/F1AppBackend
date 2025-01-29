@@ -27,7 +27,7 @@ def get_driver_standings():
         return jsonify({"error": "Missing required parameter 'season'"}), 400
 
     if season == "current":
-        season = datetime.now().year
+        season = 2024
     else:
         season = int(season)
 
@@ -43,13 +43,13 @@ def get_driver_standings():
 @f1_bp.route('/standings/constructors', methods=['GET'])
 @cache.cached(timeout=3600, query_string=True)
 def get_constructor_standings():
-    season = request.args.get('season', type=int)
+    season = request.args.get('season', type=str)
 
     if not season:
         return jsonify({"error": "Missing required parameter 'season'"}), 400
 
     if season == "current":
-        season = datetime.now().year
+        season = 2024
     else:
         season = int(season)
 
@@ -68,6 +68,7 @@ def get_schedule():
     return jsonify(schedule), 200
 
 @f1_bp.route('/race', methods=['GET'])
+@cache.cached(timeout=1800, query_string=True)
 def get_race():
 
     season = request.args.get('season', type=str)
@@ -76,7 +77,7 @@ def get_race():
         return jsonify({"error": "Missing required parameters 'season' and 'round'"}), 400
 
     if season == "current":
-        season = datetime.now().year
+        season = 2024
     else:
         season = int(season)
 
@@ -90,6 +91,7 @@ def get_race():
 
 
 @f1_bp.route('/driver', methods=['GET'])
+@cache.cached(timeout=1800, query_string=True)
 def get_driver():
     driver_id = request.args.get('id', type=str)
 
@@ -100,6 +102,7 @@ def get_driver():
     return jsonify(driver)
 
 @f1_bp.route('/constructor', methods=['GET'])
+@cache.cached(timeout=1800, query_string=True)
 def get_constructor():
     constructor_id = request.args.get('id', type=str)
 
@@ -110,7 +113,7 @@ def get_constructor():
     return jsonify(constructor)
 
 @f1_bp.route('/drivers', methods=['GET'])
-@cache.cached(timeout=1800)
+@cache.cached(timeout=1800, query_string=True)
 def get_all_drivers():
     season = request.args.get('season', type=str)
 
@@ -118,7 +121,7 @@ def get_all_drivers():
         return jsonify({"error": "Missing required parameter 'season'"}), 400
 
     if season == "current":
-        season = datetime.now().year
+        season = 2024
     else :
         season = int(season)
 
@@ -126,7 +129,7 @@ def get_all_drivers():
     return jsonify(drivers)
 
 @f1_bp.route('/constructors', methods=['GET'])
-@cache.cached(timeout=1800)
+@cache.cached(timeout=1800, query_string=True)
 def get_all_constructors():
     season = request.args.get('season', type=str)
 
@@ -134,7 +137,7 @@ def get_all_constructors():
         return jsonify({"error": "Missing required parameter 'season'"}), 400
 
     if season == "current":
-        season = datetime.now().year
+        season = 2024
     else :
         season = int(season)
 
