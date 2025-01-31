@@ -21,7 +21,7 @@ f1_service = F1Service(driver_repository, constructor_repository, race_repositor
 @f1_bp.route('/standings/drivers', methods=['GET'])
 @cache.cached(timeout=3600, query_string=True)
 def get_driver_standings():
-    season = request.args.get('season', type=int)
+    season = request.args.get('season', type=str)
 
     if not season:
         return jsonify({"error": "Missing required parameter 'season'"}), 400

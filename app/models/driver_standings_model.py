@@ -1,5 +1,15 @@
 class DriverStandings:
-    def __init__(self, driver_id, name, constructor_id, constructor_name, points, position, wins, driver_number):
+    def __init__(
+            self,
+            driver_id: str,
+            name: str,
+            constructor_id: str,
+            constructor_name: str,
+            points: float,
+            position: int,
+            wins: int,
+            driver_number: int
+    ):
         self.driver_id = driver_id
         self.name = name
         self.constructor_id = constructor_id

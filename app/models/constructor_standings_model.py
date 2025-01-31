@@ -1,5 +1,12 @@
 class ConstructorStandings:
-    def __init__(self, constructor_id: str, name: str, points: float, position: int, wins: int):
+    def __init__(
+            self,
+            constructor_id: str,
+            name: str,
+            points: float,
+            position: int,
+            wins: int
+    ):
         self.constructor_id = constructor_id
         self.name = name
         self.points = points
