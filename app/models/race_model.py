@@ -30,9 +30,9 @@ class Race:
             "season": self.season,
             "round": self.round,
             "name": self.name,
-            "Circuit": {
-                "circuitName": self.circuit_name,
-                "Location": {
+            "circuit": {
+                "circuit_name": self.circuit_name,
+                "location": {
                     "city": self.city,
                     "country": self.country,
                 }

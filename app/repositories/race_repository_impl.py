@@ -23,13 +23,6 @@ class RaceRepositoryImpl(RaceRepositoryInterface):
                 "error": f"Results DataFrame is empty for season={season}, round={round}"
             }
 
-        pd.set_option('display.max_columns', None)
-        pd.set_option('display.expand_frame_repr', False)
-        pd.set_option('display.max_colwidth', None)
-        pd.set_option('display.max_rows', None)
-        pd.set_option('display.width', None)
-        print(schedule_first_row)
-
         race_id = schedule_first_row.get('raceId') or f"{season}-{round}"
         race_name = schedule_first_row.get('raceName', 'Unknown')
         date = schedule_first_row.get('raceDate', 'Unknown')  # e.g. 'raceDate' or 'date'
@@ -130,6 +123,6 @@ class RaceRepositoryImpl(RaceRepositoryInterface):
         return {
             "Schedule": {
                 "season": season,
-                "Races": new_schedule
+                "races": new_schedule
             }
         }

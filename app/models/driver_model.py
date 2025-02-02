@@ -31,7 +31,7 @@ class Driver:
             "age": self.age,
             "number": self.number,
             "nationality": self.nationality,
-            "constructor": self.constructor_id,
+            "constructor_id": self.constructor_id,
             "constructor_name": self.constructor_name,
             "headshot_url": self.headshot_url,
             "points": self.points,
