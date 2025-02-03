@@ -6,11 +6,12 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-RUN mkdir -p /app/FastF1Cache
+RUN mkdir -p /app/FastF1Cache app/static/images
 
 COPY requirements.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt && \
+    pip cache purge
 
 COPY . .
 

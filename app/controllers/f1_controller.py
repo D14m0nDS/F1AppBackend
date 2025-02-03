@@ -1,6 +1,6 @@
-from datetime import datetime
+import os
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, send_from_directory, current_app
 from app.error_handlers.f1_error_handlers import register_error_handlers
 from app.repositories.driver_repository_impl import DriverRepositoryImpl
 from app.repositories.constructor_repository_impl import ConstructorRepositoryImpl
@@ -145,4 +145,13 @@ def get_all_constructors():
 
     return jsonify(constructors)
 
+
+@f1_bp.route('/images/<filename>', methods=['GET'])
+def serve_image(filename):
+    image_folder = os.path.join(current_app.root_path, 'static/images')
+
+    if not os.path.exists(os.path.join(image_folder, filename)):
+        return jsonify({"error": "Image not found"}), 404
+
+    return send_from_directory(image_folder, filename)
 register_error_handlers(f1_bp)
