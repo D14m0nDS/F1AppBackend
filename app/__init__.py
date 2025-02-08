@@ -1,6 +1,6 @@
-from flask import Flask
+from flask import Flask, request
 from app.config import Config
-from app.extensions import db, migrate, jwt, socketio, limiter
+from app.extensions import db, migrate, jwt, socketio, limiter, schedule_tasks
 from app.controllers import register_blueprints
 from app.utils.caching import set_up_caching
 
@@ -18,6 +18,9 @@ def create_app(config_class=Config):
     db.init_app(app)
 
     from app.models.user_model import User
+    from app.models.revoked_refresh_token_model import RevokedRefreshToken
+    from app.models.revoked_access_token_model import RevokedAccessToken
+    from app.models.active_token_model import ActiveRefreshToken
 
     migrate.init_app(app, db)
 
@@ -26,4 +29,6 @@ def create_app(config_class=Config):
     socketio.init_app(app, cors_allowed_origins="*")
     set_up_caching(app)
     register_blueprints(app)
+    schedule_tasks()
+
     return app

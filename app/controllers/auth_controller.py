@@ -5,9 +5,10 @@ from markupsafe import escape
 from app import limiter
 from app.services.auth_service import AuthService
 from app.repositories.user_repository_impl import UserRepositoryImpl
+from app.repositories.tokens_repository_impl import TokenRepositoryImpl
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
-auth_service = AuthService(UserRepositoryImpl())
+auth_service = AuthService(UserRepositoryImpl(), TokenRepositoryImpl())
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
@@ -68,21 +69,40 @@ def login():
 
 
 @auth_bp.route('/logout', methods=['POST'])
-@jwt_required()
+@jwt_required()  # Requires an access token
 def logout():
     jti = get_jwt()["jti"]
-    auth_service.revoke_token(jti)
-    session.clear()
-    return jsonify({'message': 'Logged out successfully'}), 200
+    auth_service.revoke_access_token(jti)
+
+    return jsonify({'message': 'Access token revoked successfully'}), 200
+
+@auth_bp.route('/logout-refresh', methods=['POST'])
+@jwt_required(refresh=True)
+def logout_refresh():
+
+    refresh_jti = get_jwt().get("jti")
+    auth_service.revoke_refresh_token(refresh_jti)
+    return jsonify({'message': 'Refresh token revoked successfully'}), 200
 
 
 @auth_bp.route('/refresh', methods=['POST'])
 @jwt_required(refresh=True)
 def refresh():
+    jti = get_jwt()["jti"]
+    if auth_service.is_refresh_token_revoked(jti) or not auth_service.is_refresh_token_active(jti):
+        return jsonify({"message": "Invalid or expired refresh token"}), 401
+
     current_user_id = get_jwt_identity()
     user = auth_service.get_user_by_id(int(current_user_id))
-    access_token = auth_service.generate_tokens(user)[0]
-    return jsonify({'access_token': access_token}), 200
+
+    new_access_token, new_refresh_token = auth_service.generate_tokens(user)
+    auth_service.revoke_refresh_token(jti)
+
+    return jsonify({
+        'access_token': new_access_token,
+        'refresh_token': new_refresh_token
+    }), 200
+
 
 @auth_bp.route('/change-password', methods=['POST'])
 @jwt_required()

@@ -16,3 +16,4 @@ email_validator
 MarkupSafe
 alembic
 SQLAlchemy
+apscheduler

@@ -7,6 +7,10 @@ class UserRepositoryInterface(ABC):
         pass
 
     @abstractmethod
+    def user_exists(self, email, username):
+        pass
+
+    @abstractmethod
     def find_by_email(self, email):
         pass
 
