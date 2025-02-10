@@ -9,7 +9,7 @@ def get_broadcast_address(ip, subnet_mask):
         return str(network.broadcast_address)
     except Exception as e:
         print(f"Error calculating broadcast address: {e}")
-        return "255.255.255.255"  # Default to global broadcast if calculation fails
+        return "255.255.255.255"
 
 
 def broadcast_ip():

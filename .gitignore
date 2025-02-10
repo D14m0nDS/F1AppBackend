@@ -379,7 +379,5 @@ pyrightconfig.json
 
 FastF1Cache/
 
-cert.pem
-key.pem
 
 # End of https://www.toptal.com/developers/gitignore/api/python,flask,pycharm

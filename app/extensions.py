@@ -7,7 +7,7 @@ from flask_socketio import SocketIO
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-from app.repositories.tokens_repository_impl import TokenRepositoryImpl
+
 
 limiter = Limiter(key_func=get_remote_address)
 db = SQLAlchemy()
@@ -17,6 +17,7 @@ socketio = SocketIO(cors_allowed_origins="*")
 cache = Cache()
 
 def schedule_tasks():
+    from app.repositories.tokens_repository_impl import TokenRepositoryImpl
     scheduler = BackgroundScheduler()
     token_repository = TokenRepositoryImpl()
 

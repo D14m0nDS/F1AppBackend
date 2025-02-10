@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask
 from app.config import Config
 from app.extensions import db, migrate, jwt, socketio, limiter, schedule_tasks
 from app.controllers import register_blueprints

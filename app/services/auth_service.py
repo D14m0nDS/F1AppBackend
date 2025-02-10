@@ -4,10 +4,12 @@ from app.extensions import cache, db
 from flask_jwt_extended import create_access_token, create_refresh_token, decode_token
 from datetime import timedelta, datetime, timezone
 
+from app.repositories.token_repository import TokenRepositoryInterface
+from app.repositories.user_repository import UserRepositoryInterface
 
 
 class AuthService:
-    def __init__(self, user_repository, token_repository):
+    def __init__(self, user_repository: UserRepositoryInterface, token_repository: TokenRepositoryInterface):
         self.user_repository = user_repository
         self.token_repository = token_repository
 
