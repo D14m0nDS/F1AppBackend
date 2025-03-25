@@ -10,8 +10,7 @@ RUN mkdir -p /app/FastF1Cache app/static/images
 
 COPY requirements.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt && \
-    pip cache purge
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 

@@ -12,19 +12,11 @@ auth_service = AuthService(UserRepositoryImpl(), TokenRepositoryImpl())
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
-    data = request.get_json()
-    username_raw = data.get('username')
-    email_raw = data.get('email')
-    password_raw = data.get('password')
-    password_confirmation_raw = data.get('password_confirmation')
+    username, email, password, password_confirmation = extract_register_data(request.get_json())
 
-    if not all([username_raw, email_raw, password_raw, password_confirmation_raw]):
+    if not all([username, email, password, password_confirmation]):
         return jsonify({'message': 'Missing required fields'}), 400
 
-    username = escape(username_raw.strip())
-    email = escape(email_raw.strip().lower())
-    password = escape(password_raw.strip())
-    password_confirmation = escape(password_confirmation_raw.strip())
     if password != password_confirmation:
         return jsonify({'message': 'Passwords do not match'}), 400
     try:
@@ -42,15 +34,10 @@ def register():
 @auth_bp.route('/login', methods=['POST'])
 @limiter.limit("5/minute")
 def login():
-    data = request.get_json()
-    email_raw = data.get('email')
-    password_raw = data.get('password')
+    email, password = extract_login_data(request.get_json())
 
-    if not all([email_raw, password_raw]):
+    if not all([email, password]):
         return jsonify({'message': 'Missing required fields'}), 400
-
-    email = escape(email_raw.strip().lower())
-    password = escape(password_raw.strip())
 
     try:
         validate_email(email).normalized
@@ -58,8 +45,9 @@ def login():
         return jsonify({'message': 'Invalid email format'}), 400
 
     user, error = auth_service.authenticate_user(email, password)
+
     if error == 'account_locked':
-        return jsonify({'message': 'Account locked for 15 minutes'}), 429
+        return jsonify({'message': 'Account locked for 5 minutes'}), 429
     elif not user:
         return jsonify({'message': 'Invalid credentials'}), 401
 
@@ -69,17 +57,8 @@ def login():
 
 
 @auth_bp.route('/logout', methods=['POST'])
-@jwt_required()  # Requires an access token
-def logout():
-    jti = get_jwt()["jti"]
-    auth_service.revoke_access_token(jti)
-
-    return jsonify({'message': 'Access token revoked successfully'}), 200
-
-@auth_bp.route('/logout-refresh', methods=['POST'])
 @jwt_required(refresh=True)
-def logout_refresh():
-
+def logout():
     refresh_jti = get_jwt().get("jti")
     auth_service.revoke_refresh_token(refresh_jti)
     return jsonify({'message': 'Refresh token revoked successfully'}), 200
@@ -89,10 +68,17 @@ def logout_refresh():
 @jwt_required(refresh=True)
 def refresh():
     jti = get_jwt()["jti"]
-    if auth_service.is_refresh_token_revoked(jti) or not auth_service.is_refresh_token_active(jti):
-        return jsonify({"message": "Invalid or expired refresh token"}), 401
+
+    if auth_service.is_refresh_token_revoked(jti):
+        return jsonify({"message": "Token has been revoked"}), 401
+
+    if not auth_service.is_refresh_token_active(jti):
+        return jsonify({"message": "Token not active"}), 401
+
 
     current_user_id = get_jwt_identity()
+
+
     user = auth_service.get_user_by_id(int(current_user_id))
 
     new_access_token, new_refresh_token = auth_service.generate_tokens(user)
@@ -104,33 +90,59 @@ def refresh():
     }), 200
 
 
-@auth_bp.route('/change-password', methods=['POST'])
-@jwt_required()
-def change_password():
-    data = request.get_json()
-    current_password = data.get('current_password')
-    new_password = data.get('new_password')
-    new_password_confirmation = data.get('new_password_confirmation')
+# @auth_bp.route('/change-password', methods=['POST'])
+# @jwt_required()
+# def change_password():
+#     data = request.get_json()
+#     current_password = data.get('current_password')
+#     new_password = data.get('new_password')
+#     new_password_confirmation = data.get('new_password_confirmation')
+#
+#     if not all([current_password, new_password, new_password_confirmation]):
+#         return jsonify({'message': 'Missing required fields'}), 400
+#
+#     if new_password != new_password_confirmation:
+#         return jsonify({'message': 'New passwords do not match'}), 400
+#
+#     current_user_id = get_jwt_identity()
+#     user = auth_service.get_user_by_id(current_user_id)
+#     if not user:
+#         return jsonify({'message': 'User not found'}), 404
+#
+#     if not auth_service.verify_password(user, current_password):
+#         return jsonify({'message': 'Current password is incorrect'}), 401
+#
+#     auth_service.update_password(user, new_password)
+#
+#     access_token, refresh_token = auth_service.generate_tokens(user)
+#     return jsonify({
+#         'message': 'Password updated successfully',
+#         'access_token': access_token,
+#         'refresh_token': refresh_token
+#     }), 200
 
-    if not all([current_password, new_password, new_password_confirmation]):
-        return jsonify({'message': 'Missing required fields'}), 400
+def extract_register_data(data):
+    username_raw = data.get('username')
+    email_raw = data.get('email')
+    password_raw = data.get('password')
+    password_confirmation_raw = data.get('password_confirmation')
 
-    if new_password != new_password_confirmation:
-        return jsonify({'message': 'New passwords do not match'}), 400
+    if not all([username_raw, email_raw, password_raw, password_confirmation_raw]):
+        return None, None, None, None
 
-    current_user_id = get_jwt_identity()
-    user = auth_service.get_user_by_id(current_user_id)
-    if not user:
-        return jsonify({'message': 'User not found'}), 404
+    username = escape(username_raw.strip())
+    email = escape(email_raw.strip().lower())
+    password = escape(password_raw.strip())
+    password_confirmation = escape(password_confirmation_raw.strip())
+    return username, email, password, password_confirmation
 
-    if not auth_service.verify_password(user, current_password):
-        return jsonify({'message': 'Current password is incorrect'}), 401
+def extract_login_data(data):
+    email_raw = data.get('email')
+    password_raw = data.get('password')
 
-    auth_service.update_password(user, new_password)
+    if not all([email_raw, password_raw]):
+        return None, None
 
-    access_token, refresh_token = auth_service.generate_tokens(user)
-    return jsonify({
-        'message': 'Password updated successfully',
-        'access_token': access_token,
-        'refresh_token': refresh_token
-    }), 200
+    email = escape(email_raw.strip().lower())
+    password = escape(password_raw.strip())
+    return email, password

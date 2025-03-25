@@ -42,8 +42,8 @@ class AuthService:
             return None, 'invalid_credentials'
 
     def generate_tokens(self, user):
-        access_token = create_access_token(identity=str(user.id), expires_delta=timedelta(hours=1))
-        refresh_token = create_refresh_token(identity=str(user.id), expires_delta=timedelta(days=30))
+        access_token = create_access_token(identity=str(user.id), expires_delta=timedelta(minutes=15))
+        refresh_token = create_refresh_token(identity=str(user.id), expires_delta=timedelta(days=15))
 
         refresh_jti = decode_token(refresh_token)["jti"]
 
@@ -54,25 +54,16 @@ class AuthService:
 
         return access_token, refresh_token
 
-    @staticmethod
-    def create_access_token(identity):
-
-        access_expires = timedelta(hours=1)
-
-        access_token = create_access_token(identity=identity, expires_delta=access_expires)
-
-        return access_token
-
     def get_user_by_id(self, user_id):
         return self.user_repository.find_by_id(int(user_id))
 
-    @staticmethod
-    def verify_password(user, current_password):
-        return check_password_hash(user.password_hash, current_password)
-
-    def update_password(self, user, new_password):
-        user.password_hash = generate_password_hash(new_password)
-        self.user_repository.save(user)
+    # @staticmethod
+    # def verify_password(user, current_password):
+    #     return check_password_hash(user.password_hash, current_password)
+    #
+    # def update_password(self, user, new_password):
+    #     user.password_hash = generate_password_hash(new_password)
+    #     self.user_repository.save(user)
 
     def revoke_access_token(self, jti):
         self.token_repository.store_revoked_access_token(jti)
@@ -90,3 +81,5 @@ class AuthService:
     def is_refresh_token_active(self, jti):
         return self.token_repository.is_refresh_token_active(jti)
 
+    def get_user_by_(self):
+        pass

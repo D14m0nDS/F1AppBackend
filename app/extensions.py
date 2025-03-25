@@ -16,10 +16,10 @@ jwt = JWTManager()
 socketio = SocketIO(cors_allowed_origins="*")
 cache = Cache()
 
-def schedule_tasks():
-    from app.repositories.tokens_repository_impl import TokenRepositoryImpl
-    scheduler = BackgroundScheduler()
-    token_repository = TokenRepositoryImpl()
-
-    scheduler.add_job(token_repository.remove_expired_refresh_tokens, 'interval', hours=12)
-    scheduler.start()
+# def schedule_tasks():
+#     from app.repositories.tokens_repository_impl import TokenRepositoryImpl
+#     scheduler = BackgroundScheduler()
+#     token_repository = TokenRepositoryImpl()
+#
+#     scheduler.add_job(token_repository.remove_expired_refresh_tokens, 'interval', hours=12)
+#     scheduler.start()

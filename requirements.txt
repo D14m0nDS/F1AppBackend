@@ -17,3 +17,4 @@ MarkupSafe
 alembic
 SQLAlchemy
 apscheduler
+redis

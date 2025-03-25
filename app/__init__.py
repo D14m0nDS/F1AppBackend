@@ -1,6 +1,6 @@
 from flask import Flask
 from app.config import Config
-from app.extensions import db, migrate, jwt, socketio, limiter, schedule_tasks
+from app.extensions import db, migrate, jwt, socketio, limiter
 from app.controllers import register_blueprints
 from app.utils.caching import set_up_caching
 
@@ -29,6 +29,5 @@ def create_app(config_class=Config):
     socketio.init_app(app, cors_allowed_origins="*")
     set_up_caching(app)
     register_blueprints(app)
-    schedule_tasks()
 
     return app
