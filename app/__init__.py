@@ -1,6 +1,6 @@
 from flask import Flask
 from app.config import Config
-from app.extensions import db, migrate, jwt, socketio, limiter
+from app.extensions import db, migrate, jwt, socketio, limiter, cors
 from app.controllers import register_blueprints
 from app.utils.caching import set_up_caching
 
@@ -14,6 +14,16 @@ def create_app(config_class=Config):
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE='Lax'
     )
+
+    cors.init_app(app, resources={
+        r"/*": {
+            "origins": app.config['CORS_ORIGINS'],
+            "methods": app.config['CORS_METHODS'],
+            "allow_headers": app.config['CORS_ALLOW_HEADERS'],
+            "supports_credentials": app.config['CORS_SUPPORTS_CREDENTIALS'],
+            "expose_headers": ["Content-Type", "Authorization"]
+        },
+    })
 
     db.init_app(app)
 

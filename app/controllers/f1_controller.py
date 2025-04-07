@@ -154,4 +154,5 @@ def serve_image(filename):
         return jsonify({"error": "Image not found"}), 404
 
     return send_from_directory(image_folder, filename)
+
 register_error_handlers(f1_bp)

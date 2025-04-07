@@ -13,3 +13,10 @@ class Config:
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
     JWT_VERIFY_SUB = False
+    CORS_ORIGINS = [
+        "http://localhost:5173",
+        "http://localhost:5174"
+    ]
+    CORS_METHODS = ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
+    CORS_ALLOW_HEADERS = ["Content-Type", "Authorization", "x-access-token", "Cache-Control", "X-Requested-With"]
+    CORS_SUPPORTS_CREDENTIALS = True
