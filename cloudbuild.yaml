@@ -39,3 +39,6 @@ steps:
 # Tell Cloud Build which images you’re producing
 images:
   - 'gcr.io/$PROJECT_ID/$SERVICE_NAME:$SHORT_SHA'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
