@@ -1,0 +1,41 @@
+# cloudbuild.yaml
+# ---------------
+# Build your Flask+Socket.IO container, push to GCR, then deploy to Cloud Run.
+
+# 1) Build the container
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '-t',
+        'gcr.io/$PROJECT_ID/$SERVICE_NAME:$SHORT_SHA',
+        '.'
+      ]
+
+# 2) Push the image to GCR
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'gcr.io/$PROJECT_ID/$SERVICE_NAME:$SHORT_SHA'
+      ]
+
+# 3) Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud run deploy $SERVICE_NAME \
+          --image gcr.io/$PROJECT_ID/$SERVICE_NAME:$SHORT_SHA \
+          --region $REGION \
+          --platform managed \
+          --allow-unauthenticated \
+          --concurrency 80 \
+          --memory 256Mi \
+          --cpu-always-allocated=false
+
+# Tell Cloud Build which images you’re producing
+images:
+  - 'gcr.io/$PROJECT_ID/$SERVICE_NAME:$SHORT_SHA'
