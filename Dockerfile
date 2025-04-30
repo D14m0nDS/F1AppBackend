@@ -1,12 +1,8 @@
 FROM python:3.11-slim
 
-ENV PYTHONUNBUFFERED=1 \
-    FLASK_APP=run.py \
-    FLASK_ENV=production
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
-
-RUN mkdir -p /app/FastF1Cache app/static/images
 
 COPY requirements.txt .
 
@@ -14,6 +10,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE 8080
 
-CMD ["python", "run.py"]
+CMD ["sh", "-c", \
+  "gunicorn run:app \
+     -k eventlet \
+     --workers 1 \
+     --bind 0.0.0.0:${PORT:-8080} \
+     --timeout 60"]
