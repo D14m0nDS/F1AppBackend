@@ -31,7 +31,6 @@ steps:
           --allow-unauthenticated \
           --concurrency 80 \
           --memory 256Mi \
-          --cpu-always-allocated=false
 
 images:
   - 'gcr.io/$PROJECT_ID/${_SERVICE_NAME}:$SHORT_SHA'
