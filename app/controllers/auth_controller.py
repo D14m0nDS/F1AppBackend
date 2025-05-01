@@ -12,7 +12,11 @@ auth_service = AuthService(UserRepositoryImpl(), TokenRepositoryImpl())
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
-    username, email, password, password_confirmation = extract_register_data(request.get_json())
+    print("Headers:", request.headers)
+    print("Raw body:", request.get_data())
+    data = request.get_json(silent=True)
+    print("Parsed JSON:", data)
+    username, email, password, password_confirmation = extract_register_data(data)
 
     if not all([username, email, password, password_confirmation]):
         return jsonify({'message': 'Missing required fields'}), 400
