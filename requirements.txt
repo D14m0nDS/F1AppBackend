@@ -20,3 +20,5 @@ apscheduler
 redis
 gunicorn>=20.1.0
 eventlet>=0.33.0
+cloud-sql-python-connector
+pg8000

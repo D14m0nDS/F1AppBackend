@@ -3,6 +3,8 @@ from app.config import Config
 from app.extensions import db, migrate, jwt, socketio, limiter, cors
 from app.controllers import register_blueprints
 from app.utils.caching import set_up_caching
+from app.utils.cloudsql import getconn
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -14,9 +16,6 @@ def create_app(config_class=Config):
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE='Lax'
     )
-    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
-        'connect_args': {'sslmode': 'disable'}
-    }
 
     cors.init_app(app, resources={
         r"/*": {
@@ -28,7 +27,7 @@ def create_app(config_class=Config):
         },
     })
 
-    db.init_app(app)
+    db.init_app(app, engine_options={"creator": getconn})
 
     from app.models.user_model import User
     from app.models.revoked_refresh_token_model import RevokedRefreshToken
