@@ -14,6 +14,9 @@ def create_app(config_class=Config):
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE='Lax'
     )
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+        'connect_args': {'sslmode': 'disable'}
+    }
 
     cors.init_app(app, resources={
         r"/*": {
