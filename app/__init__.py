@@ -3,7 +3,6 @@ from app.config import Config
 from app.extensions import db, migrate, jwt, socketio, limiter, cors
 from app.controllers import register_blueprints
 from app.utils.caching import set_up_caching
-from app.utils.cloudsql import getconn
 
 
 def create_app(config_class=Config):
@@ -27,7 +26,7 @@ def create_app(config_class=Config):
         },
     })
 
-    db.init_app(app, engine_options={"creator": getconn})
+    db.init_app(app)
 
     from app.models.user_model import User
     from app.models.revoked_refresh_token_model import RevokedRefreshToken
