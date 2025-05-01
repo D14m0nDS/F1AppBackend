@@ -13,4 +13,3 @@ def set_up_caching(app):
     if not os.path.exists(fastf1_cache_dir):
         os.makedirs(fastf1_cache_dir)
     fastf1.Cache.enable_cache(fastf1_cache_dir)
-
