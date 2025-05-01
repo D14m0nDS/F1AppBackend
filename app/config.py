@@ -9,12 +9,10 @@ class Config:
     DB_PASS = os.getenv("DB_PASS")
     DB_NAME = os.getenv("DB_NAME")
     INSTANCE = os.getenv("INSTANCE_CONNECTION_NAME")
-    SQLALCHEMY_DATABASE_URI = (
-        f"postgresql+psycopg2://{DB_USER}:{DB_PASS}"
-        f"@/{DB_NAME}"
-        f"?host=/cloudsql/{INSTANCE}"
-        f"&sslmode=disable"
-    )
+    SQLALCHEMY_DATABASE_URI = "postgresql+pg8000://"
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "creator": __import__("app.utils.cloudsql", fromlist=["getconn"]).getconn
+    }
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_TYPE = 'filesystem'
     JWT_COOKIE_SECURE = True
