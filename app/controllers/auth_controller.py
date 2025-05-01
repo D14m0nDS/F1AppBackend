@@ -12,11 +12,7 @@ auth_service = AuthService(UserRepositoryImpl(), TokenRepositoryImpl())
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
-    print("Headers:", request.headers)
-    print("Raw body:", request.get_data())
-    data = request.get_json(silent=True)
-    print("Parsed JSON:", data)
-    username, email, password, password_confirmation = extract_register_data(data)
+    username, email, password, password_confirmation = extract_register_data(request.get_json())
 
     if not all([username, email, password, password_confirmation]):
         return jsonify({'message': 'Missing required fields'}), 400
@@ -125,11 +121,11 @@ def refresh():
 #         'refresh_token': refresh_token
 #     }), 200
 
-def extract_register_data(data):
-    username_raw = data.get('username')
-    email_raw = data.get('email')
-    password_raw = data.get('password')
-    password_confirmation_raw = data.get('password_confirmation')
+def extract_register_data(data: dict):
+    username_raw = data["username"]
+    email_raw = data["email"]
+    password_raw = data["password"]
+    password_confirmation_raw = data["password_confirmation"]
 
     if not all([username_raw, email_raw, password_raw, password_confirmation_raw]):
         return None, None, None, None
@@ -140,13 +136,12 @@ def extract_register_data(data):
     password_confirmation = escape(password_confirmation_raw.strip())
     return username, email, password, password_confirmation
 
-def extract_login_data(data):
+def extract_login_data(data: dict):
     email_raw = data.get('email')
     password_raw = data.get('password')
-
     if not all([email_raw, password_raw]):
         return None, None
 
-    email = escape(email_raw.strip().lower())
+    email    = escape(email_raw.strip().lower())
     password = escape(password_raw.strip())
     return email, password
