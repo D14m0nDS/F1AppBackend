@@ -5,7 +5,16 @@ from datetime import timedelta
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY')
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+    DB_USER = os.getenv("DB_USER")
+    DB_PASS = os.getenv("DB_PASS")
+    DB_NAME = os.getenv("DB_NAME")
+    INSTANCE = os.getenv("INSTANCE_CONNECTION_NAME")
+    SQLALCHEMY_DATABASE_URI = (
+        f"postgresql+psycopg2://{DB_USER}:{DB_PASS}"
+        f"@/{DB_NAME}"
+        f"?host=/cloudsql/{INSTANCE}"
+        f"&sslmode=disable"
+    )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_TYPE = 'filesystem'
     JWT_COOKIE_SECURE = True
