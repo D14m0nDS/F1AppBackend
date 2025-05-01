@@ -6,11 +6,10 @@ from flask_socketio import SocketIO
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_cors import CORS
-from app.utils.cloudsql import getconn
 
 
 limiter = Limiter(key_func=get_remote_address)
-db = SQLAlchemy(engine_options={"creator": getconn})
+db = SQLAlchemy()
 migrate = Migrate()
 jwt = JWTManager()
 cors = CORS()
