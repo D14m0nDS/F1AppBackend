@@ -26,8 +26,8 @@ def test_secure_ping_with_token(client, access_token):
     assert resp.status_code == 200
     assert resp.json == {"message": "Pong from a secure endpoint!"}
 
-@pytest.mark.parametrize("param", ["hello", "123", "with-dashes"])
-def test_params(client, param):
-    resp = client.get(f"/test/params/{param}")
+@pytest.mark.parametrize("param_value", ["hello", "123", "with-dashes"])
+def test_params(client, param_value):
+    resp = client.get(f"/test/params/{param_value}")
     assert resp.status_code == 200
-    assert resp.json == {"received_param": param}
+    assert resp.json == {"received_param": param_value}
