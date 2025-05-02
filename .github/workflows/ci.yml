@@ -56,7 +56,9 @@ jobs:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/testdb
           FLASK_APP: run.py
           TESTING: True
+          FASTF1_CACHE_DIR: ./FastF1Cache
         run: |
+          mkdir -p $FASTF1_CACHE_DIR
           flask db upgrade
 
       - name: Run pytest
@@ -65,5 +67,6 @@ jobs:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/testdb
           FLASK_APP: run.py
           TESTING: True
+          FASTF1_CACHE_DIR: ./FastF1Cache
         run: |
           pytest --maxfail=1 --disable-warnings -q
