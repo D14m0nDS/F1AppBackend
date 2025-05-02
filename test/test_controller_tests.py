@@ -12,9 +12,10 @@ def test_echo_success(client):
     assert resp.json == {"echoed_data": payload}
 
 def test_echo_no_json(client):
-    resp = client.post("/test/echo")
+    resp = client.post("/test/echo", headers={"Content-Type": "application/json"})
     assert resp.status_code == 400
     assert resp.json["error"] == "No JSON data provided"
+
 
 def test_secure_ping_requires_token(client):
     resp = client.get("/test/secure-ping")
