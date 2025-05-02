@@ -55,6 +55,7 @@ jobs:
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/testdb
           FLASK_APP: run.py
+          TESTING: True
         run: |
           flask db upgrade
 
@@ -63,5 +64,6 @@ jobs:
           FLASK_ENV: testing
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/testdb
           FLASK_APP: run.py
+          TESTING: True
         run: |
           pytest --maxfail=1 --disable-warnings -q
