@@ -24,6 +24,6 @@ def secure_ping():
     return jsonify({"message": "Pong from a secure endpoint!"}), 200
 
 # Example of a dynamic test route
-@test_bp.route('/params/<param>', methods=['GET'])
-def test_params(param):
-    return jsonify({"received_param": param}), 200
+@test_bp.route('/params/<param_value>', methods=['GET'])
+def test_params(param_value):
+    return jsonify({"received_param": param_value}), 200
