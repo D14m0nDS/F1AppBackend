@@ -9,10 +9,15 @@ class Config:
     DB_PASS = os.getenv("DB_PASS")
     DB_NAME = os.getenv("DB_NAME")
     INSTANCE = os.getenv("INSTANCE_CONNECTION_NAME")
-    SQLALCHEMY_DATABASE_URI = "postgresql+pg8000://"
-    SQLALCHEMY_ENGINE_OPTIONS = {
-        "creator": __import__("app.utils.cloudsql", fromlist=["getconn"]).getconn
-    }
+    TESTING = os.getenv('TESTING', False)
+    if TESTING:
+        SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+        SQLALCHEMY_ENGINE_OPTIONS = {}
+    else:
+        SQLALCHEMY_DATABASE_URI = "postgresql+pg8000://"
+        SQLALCHEMY_ENGINE_OPTIONS = {
+            "creator": __import__("app.utils.cloudsql", fromlist=["getconn"]).getconn
+        }
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_TYPE = 'filesystem'
     JWT_COOKIE_SECURE = True

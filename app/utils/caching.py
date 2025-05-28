@@ -9,7 +9,11 @@ def set_up_caching(app):
 
     cache.init_app(app)
 
-    fastf1_cache_dir = '/app/FastF1Cache'
+    fastf1_cache_dir = os.getenv('FASTF1_CACHE_DIR', './FastF1Cache')
+
     if not os.path.exists(fastf1_cache_dir):
-        os.makedirs(fastf1_cache_dir)
+        os.makedirs(fastf1_cache_dir, exist_ok=True)
+
     fastf1.Cache.enable_cache(fastf1_cache_dir)
+
+    app.config['FASTF1_CACHE_DIR'] = fastf1_cache_dir

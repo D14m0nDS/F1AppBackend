@@ -8,7 +8,7 @@ psycopg2-binary
 fastf1~=3.4.4
 pandas~=2.2.3
 werkzeug~=3.1.3
-flask-cors~=5.0.0
+flask-cors
 flask-oauthlib
 email-validator
 flask-limiter~=3.10.1
