@@ -12,8 +12,7 @@ COPY . .
 
 EXPOSE 8080
 
-CMD ["sh", "-c", \
-  "gunicorn run:app \
+CMD ["sh", "-c","flask db upgrade && gunicorn run:app \
      -k eventlet \
      --workers 1 \
      --bind 0.0.0.0:${PORT:-8080} \
